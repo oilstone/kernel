@@ -1,13 +1,14 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/kernel.js',
+    entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'kernel.js',
         library: 'kernel',
         libraryTarget: 'umd',
-        publicPath: '/'
+        publicPath: '/',
+        globalObject: 'this',
     },
     devServer: {
         contentBase: './dist',
