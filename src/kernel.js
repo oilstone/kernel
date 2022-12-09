@@ -46,9 +46,7 @@ class Kernel {
             return Promise.all(this.#hooks.registered.map(callback => {
                 return callback();
             })).then(() => {
-                Kernel.#CONTAINER.boot();
-
-                return true;
+                return Kernel.#CONTAINER.boot();
             }).then(() => {
                 return Promise.all(this.#hooks.booted.map(callback => {
                     return callback();
