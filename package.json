@@ -1,6 +1,6 @@
 {
   "name": "@oilstone/kernel",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "main": "dist/kernel.js",
   "devDependencies": {
     "@babel/core": "^7.12.3",
