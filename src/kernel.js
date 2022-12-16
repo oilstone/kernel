@@ -11,6 +11,14 @@ class Kernel {
         die: []
     };
 
+    static getContainer() {
+        if (typeof Kernel.#CONTAINER === 'undefined') {
+            Kernel.#CONTAINER = Container.make();
+        }
+
+        return Kernel.#CONTAINER;
+    }
+
     static configure(config) {
         Kernel.#CONFIG = config;
 
@@ -36,17 +44,15 @@ class Kernel {
     }
 
     static run() {
-        Kernel.#CONTAINER = Container.make();
-
         Kernel.#CONFIG.providers.forEach(provider => {
-            Kernel.#CONTAINER.provide(provider);
+            Kernel.getContainer().provide(provider);
         });
 
         try {
             return Promise.all(this.#hooks.registered.map(callback => {
                 return callback();
             })).then(() => {
-                return Kernel.#CONTAINER.boot();
+                return Kernel.getContainer().boot();
             }).then(() => {
                 return Promise.all(this.#hooks.booted.map(callback => {
                     return callback();
@@ -60,13 +66,13 @@ class Kernel {
     }
 
     static add(key, value) {
-        Kernel.#CONTAINER.add(key, value);
+        Kernel.getContainer().add(key, value);
 
         return Kernel;
     }
 
     static resolve(key) {
-        return Kernel.#CONTAINER.resolve(key);
+        return Kernel.getContainer().resolve(key);
     }
 }
 
